@@ -24,6 +24,7 @@ func NewTransaction(sellingOrder, buyOrder *Order, shares int, price float64) *T
 		Shares:       shares,
 		Price:        price,
 		Total:        float64(shares) * price,
+		DateTime:     time.Now(),
 	}
 
 }
