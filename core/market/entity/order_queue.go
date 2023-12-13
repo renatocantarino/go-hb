@@ -12,7 +12,7 @@ func (oq *OrderQueue) Swap(i, j int) {
 	oq.Orders[i], oq.Orders[j] = oq.Orders[j], oq.Orders[i]
 }
 
-func (oq *OrderQueue) Len(i, j int) int {
+func (oq *OrderQueue) Len() int {
 	return len(oq.Orders)
 }
 
