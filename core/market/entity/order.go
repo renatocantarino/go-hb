@@ -1,27 +1,26 @@
 package entity
 
 type Order struct {
-	ID           string
-	Investor     *Investor
-	Asset        *Asset
-	Shares       int
-	PendingShare int
-	Price        float64
-	OrderType    string
-	Status       string
-	Transactions []*Transaction
+	ID            string
+	Investor      *Investor
+	Asset         *Asset
+	Shares        int
+	PendingShares int
+	Price         float64
+	OrderType     string
+	Status        string
+	Transactions  []*Transaction
 }
 
-func NewOrder(orderId string, investor *Investor, asset *Asset, shares int, pendingShare int,
-	price float64, orderType, status string) *Order {
+func NewOrder(orderID string, investor *Investor, asset *Asset, shares int, price float64, orderType string) *Order {
 
 	return &Order{
-		ID:           orderId,
+		ID:           orderID,
 		Investor:     investor,
 		Asset:        asset,
 		Shares:       shares,
 		Status:       "OPEN",
-		PendingShare: pendingShare,
+		PendingShare: shares,
 		OrderType:    orderType,
 		Price:        price,
 		Transactions: []*Transaction{},
