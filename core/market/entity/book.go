@@ -16,8 +16,8 @@ type Book struct {
 func (b *Book) AddTransaction(transaction *Transaction, wg *sync.WaitGroup) {
 	defer wg.Done()
 
-	sellingShares := transaction.SellingOrder.PendingShare
-	buyingShares := transaction.BuyOrder.PendingShare
+	sellingShares := transaction.SellingOrder.PendingShares
+	buyingShares := transaction.BuyOrder.PendingShares
 
 	minShares := sellingShares
 	if buyingShares < minShares {
@@ -25,10 +25,10 @@ func (b *Book) AddTransaction(transaction *Transaction, wg *sync.WaitGroup) {
 	}
 
 	transaction.SellingOrder.Investor.UpdateAssetPosition(transaction.SellingOrder.Asset.Id, -minShares)
-	transaction.SellingOrder.PendingShare -= minShares
+	transaction.SellingOrder.PendingShares -= minShares
 
 	transaction.BuyOrder.Investor.UpdateAssetPosition(transaction.SellingOrder.Asset.Id, minShares)
-	transaction.BuyOrder.PendingShare -= minShares
+	transaction.BuyOrder.PendingShares -= minShares
 
 	transaction.CalculateTotal(transaction.Shares, transaction.BuyOrder.Price)
 
