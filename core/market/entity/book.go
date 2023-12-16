@@ -17,20 +17,20 @@ func (b *Book) AddTransaction(transaction *Transaction, wg *sync.WaitGroup) {
 	defer wg.Done()
 
 	sellingShares := transaction.SellingOrder.PendingShares
-	buyingShares := transaction.BuyOrder.PendingShares
+	buyingShares := transaction.BuyingOrder.PendingShares
 
 	minShares := sellingShares
 	if buyingShares < minShares {
 		minShares = buyingShares
 	}
 
-	transaction.SellingOrder.Investor.UpdateAssetPosition(transaction.SellingOrder.Asset.Id, -minShares)
+	transaction.SellingOrder.Investor.UpdateAssetPosition(transaction.SellingOrder.Asset.ID, -minShares)
 	transaction.SellingOrder.PendingShares -= minShares
 
-	transaction.BuyOrder.Investor.UpdateAssetPosition(transaction.SellingOrder.Asset.Id, minShares)
-	transaction.BuyOrder.PendingShares -= minShares
+	transaction.BuyingOrder.Investor.UpdateAssetPosition(transaction.SellingOrder.Asset.ID, minShares)
+	transaction.BuyingOrder.PendingShares -= minShares
 
-	transaction.CalculateTotal(transaction.Shares, transaction.BuyOrder.Price)
+	transaction.CalculateTotal(transaction.Shares, transaction.BuyingOrder.Price)
 
 	transaction.CloseBuyerOrder()
 	transaction.CloseSellingOrder()
@@ -55,7 +55,7 @@ func (b *Book) Trade() {
 	sellOrders := make(map[string]*OrderQueue)
 
 	for order := range b.OrderChanIn {
-		asset := order.Asset.Id
+		asset := order.Asset.ID
 
 		if buyOrders[asset] == nil {
 			buyOrders[asset] = NewOrderQueue()

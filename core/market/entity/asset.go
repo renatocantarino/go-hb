@@ -1,14 +1,14 @@
 package entity
 
 type Asset struct {
-	Id           string
+	ID           string
 	Name         string
 	MarketVolume int
 }
 
 func NewAsset(id, name string, marketVol int) *Asset {
 	return &Asset{
-		Id:           id,
+		ID:           id,
 		Name:         name,
 		MarketVolume: marketVol,
 	}
